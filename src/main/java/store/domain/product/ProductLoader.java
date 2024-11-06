@@ -1,4 +1,4 @@
-package store.domain;
+package store.domain.product;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,9 +9,11 @@ import java.util.List;
 
 public class ProductLoader {
 
-    public static void stockProducts(String file, Products products, PromotionProducts promotionProducts) throws IOException {
+    public static void stockProducts(String file, Products products, PromotionProducts promotionProducts) {
         try (BufferedReader reader = new BufferedReader(new FileReader(file, Charset.forName("UTF-8")))) {
             loadProducts(reader, products, promotionProducts);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

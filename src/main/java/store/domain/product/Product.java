@@ -1,16 +1,14 @@
-package store.domain;
+package store.domain.product;
 
-public class PromotionProduct {
+public class Product {
     private String name;
     private int price;
     private int quantity;
-    private String promotion;
 
-    public PromotionProduct(String name, int price, int quantity, String promotion) {
+    public Product(String name, int price, int quantity) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
-        this.promotion = promotion;
     }
 
     public String getName() {
@@ -24,9 +22,4 @@ public class PromotionProduct {
     public int getQuantity() {
         return this.quantity;
     }
-
-    public String getPromotion() {
-        return this.promotion;
-    }
-
 }

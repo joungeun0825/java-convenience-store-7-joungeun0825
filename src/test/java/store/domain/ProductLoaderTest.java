@@ -3,6 +3,9 @@ package store.domain;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import store.domain.product.ProductLoader;
+import store.domain.product.Products;
+import store.domain.product.PromotionProducts;
 
 import java.io.IOException;
 
