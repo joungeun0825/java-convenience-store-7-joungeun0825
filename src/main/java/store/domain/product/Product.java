@@ -11,6 +11,14 @@ public class Product {
         this.quantity = quantity;
     }
 
+    public boolean isQuantityLeft(int requiredQuantity){
+        return this.quantity >= requiredQuantity;
+    }
+
+    public void subtractQuantity(int requiredQuantity){
+        this.quantity -= requiredQuantity;
+    }
+
     public String getName() {
         return this.name;
     }

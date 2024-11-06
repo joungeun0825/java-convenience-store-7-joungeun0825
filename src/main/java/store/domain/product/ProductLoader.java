@@ -8,9 +8,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ProductLoader {
+    private static final String FILE_PATH = "src/main/resources/products.md";
 
-    public static void stockProducts(String file, Products products, PromotionProducts promotionProducts) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(file, Charset.forName("UTF-8")))) {
+    public static void stockProducts(Products products, PromotionProducts promotionProducts) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH, Charset.forName("UTF-8")))) {
             loadProducts(reader, products, promotionProducts);
         } catch (IOException e) {
             throw new RuntimeException(e);

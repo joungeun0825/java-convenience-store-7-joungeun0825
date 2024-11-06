@@ -8,8 +8,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PromotionLoader {
-    public static void registerPromotion(String file, Promotions promotions) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(file, Charset.forName("UTF-8")))) {
+    private static final String FILE_PATH = "src/main/resources/promotions.md";
+    public static void registerPromotion(Promotions promotions) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH, Charset.forName("UTF-8")))) {
             loadProducts(reader, promotions);
         } catch (IOException e) {
             throw new RuntimeException(e);

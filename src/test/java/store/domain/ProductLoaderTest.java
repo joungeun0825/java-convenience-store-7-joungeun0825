@@ -12,7 +12,6 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ProductLoaderTest {
-    private static final String FILE_PATH = "src/main/resources/products.md";
     private Products products;
     private PromotionProducts promotionProducts;
 
@@ -20,7 +19,7 @@ public class ProductLoaderTest {
     void setUp() throws IOException {
         products = new Products();
         promotionProducts = new PromotionProducts();
-        ProductLoader.stockProducts(FILE_PATH, products, promotionProducts);
+        ProductLoader.stockProducts(products, promotionProducts);
     }
 
     @Test

@@ -11,13 +11,12 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PromotionLoaderTest {
-    private static final String FILE_PATH = "src/main/resources/promotions.md";
     private Promotions promotions;
 
     @BeforeEach
     void setUp() throws IOException {
         promotions = new Promotions();
-        PromotionLoader.registerPromotion(FILE_PATH, promotions);
+        PromotionLoader.registerPromotion(promotions);
     }
 
     @Test

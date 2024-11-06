@@ -1,5 +1,8 @@
 package store.domain.promotion;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Promotion {
     private String name;
     private int buy;
@@ -13,6 +16,11 @@ public class Promotion {
         this.get = get;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    private LocalDate convertToDateTimes(String dateString){
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        return LocalDate.parse(dateString, formatter);
     }
 
     public String getName() {
