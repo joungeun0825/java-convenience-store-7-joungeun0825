@@ -2,6 +2,7 @@ package store.domain.view;
 
 import camp.nextstep.edu.missionutils.Console;
 import store.domain.product.Products;
+import store.domain.purchase.PurchaseProduct;
 import store.domain.purchase.PurchaseProducts;
 
 import java.util.Arrays;
@@ -57,7 +58,7 @@ public class InputView {
         String name = matcher.group(1);
         int quantity = Integer.parseInt(matcher.group(2));
         checkInvalidProduct(products, name, quantity);
-        purchaseProducts.add(name, quantity);
+        purchaseProducts.add(new PurchaseProduct(name, quantity));
     }
 
     private static void checkInvalidProduct(Products products, String name, int quantity) {

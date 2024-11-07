@@ -1,26 +1,34 @@
 package store.domain.promotion;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Promotion {
     private String name;
     private int buy;
     private int get;
-    private String startDate;
-    private String endDate;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
     public Promotion(String name, int buy, int get, String startDate, String endDate) {
         this.name = name;
         this.buy = buy;
         this.get = get;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startDate = convertToLocalDate(startDate);
+        this.endDate = convertToLocalDate(endDate);
     }
 
-    private LocalDate convertToDateTimes(String dateString){
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-        return LocalDate.parse(dateString, formatter);
+    public boolean isWithinPromotionPeriod(LocalDateTime today) {
+        return !today.isBefore(startDate) && !today.isAfter(endDate);
+    }
+
+    public int calculateTotalPromotionQuantity (int quantity) {
+        return quantity * (buy + get);
+    }
+
+    public int getDiscountQuantity (int leftQuantity) {
+        return leftQuantity / (buy + get);
     }
 
     public String getName() {
@@ -35,11 +43,16 @@ public class Promotion {
         return this.get;
     }
 
-    public String getStartDate() {
+    public LocalDateTime getStartDate(){
         return this.startDate;
     }
 
-    public String getEndDate() {
+    public LocalDateTime getEndDate(){
         return this.endDate;
+    }
+
+    private LocalDateTime convertToLocalDate(String dateString){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return LocalDate.parse(dateString, formatter).atStartOfDay();
     }
 }

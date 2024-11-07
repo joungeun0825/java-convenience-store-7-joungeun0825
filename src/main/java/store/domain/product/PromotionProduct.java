@@ -13,6 +13,14 @@ public class PromotionProduct {
         this.promotion = promotion;
     }
 
+    public boolean hasSufficientPromotionStock(int discountQuantity){
+        return quantity >= discountQuantity;
+    }
+
+    public void decreasePromotionStock(int discountQuantity){
+        this.quantity -= quantity;
+    }
+
     public String getName() {
         return this.name;
     }

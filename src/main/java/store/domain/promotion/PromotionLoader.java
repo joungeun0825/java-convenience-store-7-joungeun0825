@@ -9,15 +9,15 @@ import java.util.List;
 
 public class PromotionLoader {
     private static final String FILE_PATH = "src/main/resources/promotions.md";
-    public static void registerPromotion(Promotions promotions) {
+    public static void registerPromotion() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH, Charset.forName("UTF-8")))) {
-            loadProducts(reader, promotions);
+            loadProducts(reader);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static void loadProducts(BufferedReader reader, Promotions promotions) throws IOException {
+    private static void loadProducts(BufferedReader reader) throws IOException {
         String inputPromotion;
         boolean isFirstLine = true;
 
@@ -26,11 +26,11 @@ public class PromotionLoader {
                 isFirstLine = false;
                 continue;
             }
-            processPromotionLine(inputPromotion, promotions);
+            processPromotionLine(inputPromotion);
         }
     }
 
-    private static void processPromotionLine(String inputPromotion, Promotions promotions) {
+    private static void processPromotionLine(String inputPromotion) {
         List<String> currentPromotion = parsePromotionLine(inputPromotion);
         String name = currentPromotion.get(0);
         int buy = Integer.parseInt(currentPromotion.get(1));
@@ -38,15 +38,15 @@ public class PromotionLoader {
         String startDate = currentPromotion.get(3);
         String endDate = currentPromotion.get(4);
 
-        addPromotion(promotions, name, buy, get, startDate, endDate);
+        addPromotion(name, buy, get, startDate, endDate);
     }
 
     private static List<String> parsePromotionLine(String inputProduct) {
         return Arrays.asList(inputProduct.split(","));
     }
 
-    private static void addPromotion(Promotions promotions, String name, int buy, int get, String startDate, String endDate) {
+    private static void addPromotion(String name, int buy, int get, String startDate, String endDate) {
         Promotion promotion = new Promotion(name, buy, get, startDate, endDate);
-        promotions.add(promotion);
+        Promotions.add(promotion);
     }
 }

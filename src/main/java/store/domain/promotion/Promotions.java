@@ -1,32 +1,37 @@
 package store.domain.promotion;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Promotions {
-    Map<String, Promotion> promotions;
+    private static Map<String, Promotion> promotions = new HashMap<>();
 
-    public Promotions() {
-        this.promotions = new HashMap<>();
-    }
-
-    public void add(Promotion promotion) {
+    public static void add(Promotion promotion) {
         promotions.put(promotion.getName(), promotion);
     }
 
-    public int getBuyByPromotion(String promotion){
+    public static Promotion getPromotionByName(String name) {
+        return promotions.get(name);
+    }
+
+    public static Map<String, Promotion> getPromotions() {
+        return new HashMap<>(promotions);
+    }
+
+    public static int getBuyByPromotion(String promotion) {
         return promotions.get(promotion).getBuy();
     }
 
-    public int getGetByPromotion(String promotion){
+    public static int getGetByPromotion(String promotion) {
         return promotions.get(promotion).getGet();
     }
 
-    public String getStartDateByPromotion(String promotion){
+    public static LocalDateTime getStartDateByPromotion(String promotion){
         return promotions.get(promotion).getStartDate();
     }
 
-    public String getEndDateByPromotion(String promotion){
+    public static LocalDateTime getEndDateByPromotion(String promotion){
         return promotions.get(promotion).getEndDate();
     }
 }

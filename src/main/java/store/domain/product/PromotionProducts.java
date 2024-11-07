@@ -4,25 +4,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PromotionProducts {
-    private Map<String, PromotionProduct> promotionProducts;
+    private static Map<String, PromotionProduct> promotionProducts = new HashMap<>();
 
-    public PromotionProducts() {
-        this.promotionProducts = new HashMap<>();
-    }
-
-    public void add(PromotionProduct promotionProduct) {
+    public static void add(PromotionProduct promotionProduct) {
         promotionProducts.put(promotionProduct.getName(), promotionProduct);
     }
 
-    public int getPriceByName(String name) {
+    public static Map<String, PromotionProduct> getPromotionProducts() {
+        return new HashMap<>(promotionProducts);
+    }
+
+    public static int getPriceByName(String name) {
         return promotionProducts.get(name).getPrice();
     }
 
-    public int getQuantityByName(String name) {
+    public static int getQuantityByName(String name) {
         return promotionProducts.get(name).getQuantity();
     }
 
-    public String getPromotionByName(String name) {
+    public static String getPromotionByName(String name) {
         return promotionProducts.get(name).getPromotion();
     }
 }
