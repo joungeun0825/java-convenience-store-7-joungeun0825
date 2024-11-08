@@ -1,15 +1,12 @@
 package store.domain.view;
 
+import store.domain.TotalProduct;
 import store.domain.discount.PromotionDiscount;
 import store.domain.product.Product;
-import store.domain.product.Products;
 import store.domain.product.PromotionProduct;
-import store.domain.product.PromotionProducts;
 import store.domain.purchase.PurchaseProduct;
 import store.domain.purchase.PurchaseProducts;
 import store.domain.receipt.Receipt;
-
-import java.util.Map;
 
 public class OutputView {
     private static final String START_MESSAGE = "안녕하세요. W편의점입니다.\n현재 보유하고 있는 상품입니다.";
@@ -39,9 +36,9 @@ public class OutputView {
     }
 
     private static void printStocks() {
-        for (Map.Entry<String, Product> entry : Products.getProducts().entrySet()) {
-            Product product = entry.getValue();
-            PromotionProduct promotionProduct = PromotionProducts.getPromotionProducts().get(entry.getKey());
+        for(TotalProduct totalProduct : TotalProduct.values()){
+            PromotionProduct promotionProduct = totalProduct.getPromotionProduct();
+            Product product = totalProduct.getProduct();
             if (promotionProduct != null) {
                 printPromotionProducts(promotionProduct);
             }

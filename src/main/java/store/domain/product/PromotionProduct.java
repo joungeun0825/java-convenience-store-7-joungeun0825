@@ -6,17 +6,15 @@ public class PromotionProduct {
     private int quantity;
     private String promotion;
 
-    public PromotionProduct(String name, int price, int quantity, String promotion) {
+    public PromotionProduct(){
+    }
+
+    public void updatePromotionProduct(String name, int price, int quantity, String promotion) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.promotion = promotion;
     }
-
-    public boolean hasSufficientPromotionStock(int discountQuantity){
-        return quantity >= discountQuantity;
-    }
-
     public void decreasePromotionStock(int discountQuantity){
         this.quantity -= quantity;
     }

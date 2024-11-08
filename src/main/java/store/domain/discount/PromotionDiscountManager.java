@@ -2,7 +2,7 @@ package store.domain.discount;
 
 import camp.nextstep.edu.missionutils.Console;
 import camp.nextstep.edu.missionutils.DateTimes;
-import store.domain.product.PromotionProducts;
+import store.domain.TotalProduct;
 import store.domain.promotion.Promotion;
 import store.domain.promotion.Promotions;
 import store.domain.purchase.PurchaseProduct;
@@ -18,7 +18,7 @@ public class PromotionDiscountManager {
     }
 
     private static Promotion checkAvailablePromotion(PurchaseProduct purchaseProduct) {
-        String promotionName = PromotionProducts.getPromotionByName(purchaseProduct.getName());
+        String promotionName = TotalProduct.valueOf(purchaseProduct.getName()).getPromotionProduct().getPromotion();
         return Promotions.getPromotionByName(promotionName);
     }
 
@@ -28,13 +28,13 @@ public class PromotionDiscountManager {
 
     private static void getDiscounts(Promotion promotion, PurchaseProduct purchaseProduct) {
         checkCanGetMoreProduct(promotion, purchaseProduct);
-        int leftPromotionStock = PromotionProducts.getQuantityByName(purchaseProduct.getName());
+        int leftPromotionStock = TotalProduct.valueOf(purchaseProduct.getName()).getPromotionProduct().getQuantity();
         int needDiscountQuantity = promotion.calculateDiscountQuantity(purchaseProduct.getQuantity());
         int realDiscountQuantity = promotion.calculateDiscountQuantity(leftPromotionStock);
         PromotionDiscount promotionDiscount = new PromotionDiscount(purchaseProduct.getName(), needDiscountQuantity);
         PromotionDiscount updatedDiscount = checkStockQuantity(promotion, purchaseProduct, promotionDiscount, realDiscountQuantity);
         Receipt.addPromotionDiscounts(updatedDiscount);
-        PromotionProducts.getPromotionProducts().get(purchaseProduct.getName()).decreasePromotionStock(purchaseProduct.getQuantity());
+        TotalProduct.valueOf(purchaseProduct.getName()).getPromotionProduct().decreasePromotionStock(purchaseProduct.getQuantity());
     }
 
     private static PromotionDiscount checkStockQuantity(Promotion promotion, PurchaseProduct purchaseProduct, PromotionDiscount promotionDiscount, int realDiscountQuantity) {
