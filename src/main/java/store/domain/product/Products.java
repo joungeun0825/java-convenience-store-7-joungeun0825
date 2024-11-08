@@ -31,4 +31,8 @@ public class Products {
     public int getQuantityByName(String name) {
         return products.get(name).getQuantity();
     }
+
+    public static Map<String, Product> getProducts() {
+        return new HashMap<>(products);
+    }
 }

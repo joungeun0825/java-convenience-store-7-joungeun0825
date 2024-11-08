@@ -1,18 +1,20 @@
 package store.domain.purchase;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PurchaseProducts {
-    Map<String, Integer> purchaseProducts;
+    List<PurchaseProduct> purchaseProducts;
 
     public PurchaseProducts(){
-        this.purchaseProducts = new HashMap<>();
+        this.purchaseProducts = new ArrayList<>();
     }
 
-    public void add(String productName, int quantity) {
-        int originalQuantity = purchaseProducts.getOrDefault(productName, 0);
-        purchaseProducts.put(productName, originalQuantity + quantity);
+    public void add(PurchaseProduct purchaseProduct) {
+        this.purchaseProducts.add(purchaseProduct);
     }
 
+    public List<PurchaseProduct> getProducts() {
+        return purchaseProducts;
+    }
 }

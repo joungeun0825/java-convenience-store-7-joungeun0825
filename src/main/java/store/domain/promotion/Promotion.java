@@ -23,12 +23,12 @@ public class Promotion {
         return !today.isBefore(startDate) && !today.isAfter(endDate);
     }
 
-    public int calculateTotalPromotionQuantity (int quantity) {
+    public int calculateTotalPromotionQuantity(int quantity) {
         return quantity * (buy + get);
     }
 
-    public int getDiscountQuantity (int leftQuantity) {
-        return leftQuantity / (buy + get);
+    public int calculateDiscountQuantity(int purchaseQuantity) {
+        return purchaseQuantity / (buy + get);
     }
 
     public String getName() {
@@ -43,15 +43,15 @@ public class Promotion {
         return this.get;
     }
 
-    public LocalDateTime getStartDate(){
+    public LocalDateTime getStartDate() {
         return this.startDate;
     }
 
-    public LocalDateTime getEndDate(){
-        return this.endDate;
+    public LocalDateTime getEndDate() {
+        return this.startDate;
     }
 
-    private LocalDateTime convertToLocalDate(String dateString){
+    private LocalDateTime convertToLocalDate(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return LocalDate.parse(dateString, formatter).atStartOfDay();
     }
