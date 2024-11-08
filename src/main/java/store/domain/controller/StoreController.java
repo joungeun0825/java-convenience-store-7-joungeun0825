@@ -10,8 +10,8 @@ import store.domain.view.OutputView;
 public class StoreController {
 
     public static void run(){
-        ProductLoader.stockProducts();
         PromotionLoader.registerPromotion();
+        ProductLoader.stockProducts();
         OutputView.printStartMessage();
         PurchaseProducts purchaseProducts = InputView.inputProducts();
         PurchaseService.purchaseProducts(purchaseProducts);

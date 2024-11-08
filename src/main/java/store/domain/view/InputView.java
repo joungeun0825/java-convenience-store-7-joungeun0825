@@ -1,8 +1,7 @@
 package store.domain.view;
 
 import camp.nextstep.edu.missionutils.Console;
-import store.domain.TotalProduct;
-import store.domain.product.Products;
+import store.domain.product.TotalProduct;
 import store.domain.purchase.PurchaseProduct;
 import store.domain.purchase.PurchaseProducts;
 

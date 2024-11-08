@@ -1,6 +1,7 @@
 package store.domain.product;
 
-import store.domain.TotalProduct;
+import store.domain.promotion.Promotion;
+import store.domain.promotion.TotalPromotion;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -57,10 +58,11 @@ public class ProductLoader {
     }
 
     private static void addRegularProduct(String name, int price, int quantity) {
-        TotalProduct.valueOf(name).getProduct().updateProduct(name, price, quantity);
+        TotalProduct.valueOf(name).getProduct().updateRegularProduct(price, quantity);
     }
 
-    private static void addPromotionProduct(String name, int price, int quantity, String promotion) {
-        TotalProduct.valueOf(name).getPromotionProduct().updatePromotionProduct(name, price, quantity,promotion);
+    private static void addPromotionProduct(String name, int price, int promotionQuantity, String promotionName) {
+        Promotion promotion = TotalPromotion.fromDisplayName(promotionName).getPromotion();
+        TotalProduct.valueOf(name).getProduct().updatePromotionProduct(price, promotionQuantity, promotion);
     }
 }

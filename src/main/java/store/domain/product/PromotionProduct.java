@@ -1,22 +1,30 @@
 package store.domain.product;
 
+import store.domain.promotion.Promotion;
+
 public class PromotionProduct {
     private String name;
     private int price;
     private int quantity;
-    private String promotion;
+    private Promotion promotion;
 
-    public PromotionProduct(){
-    }
-
-    public void updatePromotionProduct(String name, int price, int quantity, String promotion) {
+    public PromotionProduct(String name, int price, int quantity, Promotion promotion) {
         this.name = name;
         this.price = price;
         this.quantity = quantity;
         this.promotion = promotion;
     }
+
+    public int calculateRealDiscountQuantity() {
+        return promotion.calculateRealDiscountQuantity(quantity);
+    }
+
     public void decreasePromotionStock(int discountQuantity){
         this.quantity -= quantity;
+    }
+
+    public boolean isActivePromotion(){
+        return this.promotion.isWithinPromotionPeriod();
     }
 
     public String getName() {
@@ -31,7 +39,7 @@ public class PromotionProduct {
         return this.quantity;
     }
 
-    public String getPromotion() {
+    public Promotion getPromotion(){
         return this.promotion;
     }
 

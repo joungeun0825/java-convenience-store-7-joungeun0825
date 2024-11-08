@@ -1,5 +1,7 @@
 package store.domain.promotion;
 
+import camp.nextstep.edu.missionutils.DateTimes;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -11,15 +13,19 @@ public class Promotion {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
-    public Promotion(String name, int buy, int get, String startDate, String endDate) {
+    public Promotion(String name){
         this.name = name;
+    }
+
+    public void updatePromotion(int buy, int get, String startDate, String endDate) {
         this.buy = buy;
         this.get = get;
         this.startDate = convertToLocalDate(startDate);
         this.endDate = convertToLocalDate(endDate);
     }
 
-    public boolean isWithinPromotionPeriod(LocalDateTime today) {
+    public boolean isWithinPromotionPeriod() {
+        LocalDateTime today = DateTimes.now();
         return !today.isBefore(startDate) && !today.isAfter(endDate);
     }
 
@@ -29,6 +35,10 @@ public class Promotion {
 
     public int calculateDiscountQuantity(int purchaseQuantity) {
         return purchaseQuantity / (buy + get);
+    }
+
+    public int calculateRealDiscountQuantity(int leftQuantity) {
+        return leftQuantity / (buy + get);
     }
 
     public String getName() {

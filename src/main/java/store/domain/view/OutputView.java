@@ -1,6 +1,6 @@
 package store.domain.view;
 
-import store.domain.TotalProduct;
+import store.domain.product.TotalProduct;
 import store.domain.discount.PromotionDiscount;
 import store.domain.product.Product;
 import store.domain.product.PromotionProduct;
@@ -36,9 +36,9 @@ public class OutputView {
     }
 
     private static void printStocks() {
-        for(TotalProduct totalProduct : TotalProduct.values()){
-            PromotionProduct promotionProduct = totalProduct.getPromotionProduct();
+        for (TotalProduct totalProduct : TotalProduct.values()) {
             Product product = totalProduct.getProduct();
+            PromotionProduct promotionProduct = product.getPromotionProduct();
             if (promotionProduct != null) {
                 printPromotionProducts(promotionProduct);
             }
@@ -51,7 +51,7 @@ public class OutputView {
                 promotionProduct.getName(),
                 promotionProduct.getPrice(),
                 promotionProduct.getQuantity(),
-                promotionProduct.getPromotion()
+                promotionProduct.getPromotion().getName()
         ));
     }
 

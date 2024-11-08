@@ -1,7 +1,6 @@
 package store.domain.purchase;
 
-import store.domain.TotalProduct;
-import store.domain.product.Products;
+import store.domain.product.TotalProduct;
 
 public class PurchaseProduct {
     private String name;

@@ -9,6 +9,7 @@ import java.util.List;
 
 public class PromotionLoader {
     private static final String FILE_PATH = "src/main/resources/promotions.md";
+
     public static void registerPromotion() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH, Charset.forName("UTF-8")))) {
             loadProducts(reader);
@@ -46,7 +47,7 @@ public class PromotionLoader {
     }
 
     private static void addPromotion(String name, int buy, int get, String startDate, String endDate) {
-        Promotion promotion = new Promotion(name, buy, get, startDate, endDate);
-        Promotions.add(promotion);
+        Promotion promotion = TotalPromotion.fromDisplayName(name).getPromotion();
+        promotion.updatePromotion(buy, get, startDate, endDate);
     }
 }
