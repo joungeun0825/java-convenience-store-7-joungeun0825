@@ -10,8 +10,8 @@ public class Promotion {
     private String name;
     private int buy;
     private int get;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private String startDate;
+    private String endDate;
 
     public Promotion(String name){
         this.name = name;
@@ -20,13 +20,13 @@ public class Promotion {
     public void updatePromotion(int buy, int get, String startDate, String endDate) {
         this.buy = buy;
         this.get = get;
-        this.startDate = convertToLocalDate(startDate);
-        this.endDate = convertToLocalDate(endDate);
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
     public boolean isWithinPromotionPeriod() {
         LocalDateTime today = DateTimes.now();
-        return !today.isBefore(startDate) && !today.isAfter(endDate);
+        return !today.isBefore(convertToLocalDate(startDate)) && !today.isAfter(convertToLocalDate(endDate));
     }
 
     public int calculateTotalPromotionQuantity(int quantity) {

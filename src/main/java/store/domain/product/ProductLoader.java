@@ -18,6 +18,7 @@ public class ProductLoader {
             Files.lines(Paths.get(FILE_PATH), Charset.forName("UTF-8"))
                     .skip(1)
                     .forEach(ProductLoader::processProductLine);
+            updateProductPriceWithPromotionProductPrice();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

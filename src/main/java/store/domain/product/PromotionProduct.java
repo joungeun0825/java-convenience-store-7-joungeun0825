@@ -3,6 +3,9 @@ package store.domain.product;
 import store.domain.promotion.Promotion;
 
 public class PromotionProduct {
+    private static final String TO_STRING_FORMAT = "- %s %s원 %d개 %s";
+    private static final String TO_STRING_FORMAT_EMPTY_STOCK = "- %s %s원 재고 없음 %s";
+
     private String name;
     private int price;
     private int quantity;
@@ -31,7 +34,7 @@ public class PromotionProduct {
         return this.quantity > 0;
     }
 
-    public boolean canGiveMore(int newQuantity){
+    public boolean canGiveMore(int newQuantity) {
         return this.quantity >= newQuantity;
     }
 
@@ -53,6 +56,14 @@ public class PromotionProduct {
 
     public Promotion getPromotion() {
         return this.promotion;
+    }
+
+    @Override
+    public String toString() {
+        if (this.quantity > 0) {
+            return String.format(TO_STRING_FORMAT, name, String.format("%,d", price), quantity, promotion.getName());
+        }
+        return String.format(TO_STRING_FORMAT_EMPTY_STOCK, name, String.format("%,d", price), promotion.getName());
     }
 
 }
