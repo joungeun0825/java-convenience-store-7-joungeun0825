@@ -10,9 +10,11 @@ public class Product {
 
     public Product(String name) {
         this.name = name;
+        this.price = 0;
+        this.quantity = 0;
     }
 
-    public void updatePrice(int newPrice){
+    public void updatePrice(int newPrice) {
         this.price = newPrice;
     }
 
@@ -25,11 +27,11 @@ public class Product {
         this.promotionProduct = new PromotionProduct(name, price, promotionQuantity, promotion);
     }
 
-    public void updateQuantity(int newQuantity){
+    public void updateQuantity(int newQuantity) {
         this.quantity += newQuantity;
     }
 
-    public void updatePurchase(int newQuantity){
+    public void updatePurchase(int newQuantity) {
         this.quantity -= newQuantity;
     }
 

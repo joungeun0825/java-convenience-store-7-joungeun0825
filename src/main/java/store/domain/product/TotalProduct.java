@@ -20,7 +20,7 @@ public enum TotalProduct {
     }
 
     public void updateProductPriceWithPromotionProductPrice() {
-        if (this.product.getPrice() == 0 && this.product.getPromotionProduct() != null) {
+        if (this.product.getPrice() == 0) {
             this.product.updatePrice(this.product.getPromotionProduct().getPrice());
         }
     }

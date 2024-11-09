@@ -67,8 +67,8 @@ public class ProductLoader {
         TotalProduct.valueOf(name).getProduct().updatePromotionProduct(price, promotionQuantity, promotion);
     }
 
-    private static void updateProductPriceWithPromotionProductPrice(){
-        for(TotalProduct totalProduct:TotalProduct.values()){
+    private static void updateProductPriceWithPromotionProductPrice() {
+        for (TotalProduct totalProduct : TotalProduct.values()) {
             totalProduct.updateProductPriceWithPromotionProductPrice();
         }
     }
