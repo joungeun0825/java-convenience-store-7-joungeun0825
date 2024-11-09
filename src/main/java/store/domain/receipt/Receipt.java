@@ -13,6 +13,13 @@ public class Receipt {
     private static List<MembershipDiscount> membershipDiscounts = new ArrayList<>();
     private static int totalPrice = 0;
 
+    public static void initReceipt(){
+        realPurchaseProducts = new ArrayList<>();
+        promotionDiscounts = new ArrayList<>();
+        membershipDiscounts = new ArrayList<>();
+        totalPrice = 0;
+    }
+
     public static void addPurchaseProduct(PurchaseProduct purchaseProduct){
         realPurchaseProducts.add(purchaseProduct);
     }

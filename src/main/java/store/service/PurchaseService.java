@@ -1,6 +1,7 @@
-package store.domain.purchase;
+package store.service;
 
-import store.domain.discount.PromotionDiscountManager;
+import store.domain.purchase.PurchaseProduct;
+import store.domain.purchase.PurchaseProducts;
 import store.domain.product.Product;
 import store.domain.product.TotalProduct;
 import store.domain.receipt.Receipt;
@@ -15,8 +16,10 @@ public class PurchaseService {
     private static void purchase(PurchaseProduct purchaseProduct) {
         Product product = TotalProduct.valueOf(purchaseProduct.getName()).getProduct();
         if (product.existValidPromotion()) {
-            PromotionDiscountManager.applyPromotionDiscount(product.getPromotionProduct(), purchaseProduct);
+            PromotionDiscountService.applyPromotionDiscount(product.getPromotionProduct(), purchaseProduct);
+            return;
         }
+        product.updatePurchase(purchaseProduct.getQuantity());
         Receipt.addPurchaseProduct(purchaseProduct);
     }
 }

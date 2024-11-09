@@ -1,4 +1,4 @@
-package store.domain.view;
+package store.view;
 
 import store.domain.product.TotalProduct;
 import store.domain.discount.PromotionDiscount;
@@ -10,6 +10,9 @@ import store.domain.receipt.Receipt;
 
 public class OutputView {
     private static final String START_MESSAGE = "안녕하세요. W편의점입니다.\n현재 보유하고 있는 상품입니다.";
+
+    private static final String ERROR_MESSAGE = "[ERROR] ";
+
     private static final String STOCK_FORMAT = "- %s %d원 %d개";
     private static final String PROMOTION_STOCK_FORMAT = "- %s %d원 %d개 %s";
 
@@ -26,6 +29,10 @@ public class OutputView {
     public static void printStartMessage() {
         System.out.println(START_MESSAGE);
         printStocks();
+    }
+
+    public static void printErrorMessage(String message) {
+        System.out.println(ERROR_MESSAGE + message);
     }
 
     public static void printReceipt(PurchaseProducts purchaseProducts) {

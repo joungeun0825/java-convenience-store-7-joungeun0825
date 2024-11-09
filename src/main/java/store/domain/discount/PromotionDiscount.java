@@ -13,7 +13,7 @@ public class PromotionDiscount {
         this.price = calcPrice(quantity);
     }
 
-    public PromotionDiscount updatePromotionDiscountWithQuantity(int newQuantity){
+    public PromotionDiscount updatePromotionDiscountWithQuantity(int newQuantity) {
         this.quantity = newQuantity;
         this.price = calcPrice(newQuantity);
         return this;
@@ -23,15 +23,15 @@ public class PromotionDiscount {
         return TotalProduct.valueOf(this.productName).getProduct().getPrice() * quantity;
     }
 
-    public String getProductName(){
+    public String getProductName() {
         return this.productName;
     }
 
-    public int getQuantity(){
+    public int getQuantity() {
         return this.quantity;
     }
 
-    public int getPrice(){
+    public int getPrice() {
         return this.price;
     }
 }

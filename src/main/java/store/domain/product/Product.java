@@ -21,8 +21,16 @@ public class Product {
         this.promotionProduct = new PromotionProduct(name, price, promotionQuantity, promotion);
     }
 
+    public void updateQuantity(int newQuantity){
+        this.quantity += newQuantity;
+    }
+
+    public void updatePurchase(int newQuantity){
+        this.quantity -= newQuantity;
+    }
+
     public boolean existValidPromotion() {
-        return (promotionProduct != null && promotionProduct.isActivePromotion());
+        return (promotionProduct != null && promotionProduct.isActivePromotion() && promotionProduct.isStockExist());
     }
 
     public String getName() {

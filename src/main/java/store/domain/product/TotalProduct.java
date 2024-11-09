@@ -19,6 +19,10 @@ public enum TotalProduct {
         this.product = product;
     }
 
+    public boolean checkValidPromotionProduct(){
+        return this.product.existValidPromotion();
+    }
+
     public Product getProduct() {
         return product;
     }

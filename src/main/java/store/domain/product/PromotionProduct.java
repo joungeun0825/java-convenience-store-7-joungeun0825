@@ -19,11 +19,23 @@ public class PromotionProduct {
         return promotion.calculateRealDiscountQuantity(quantity);
     }
 
-    public void decreasePromotionStock(int discountQuantity){
-        this.quantity -= quantity;
+    public void decreasePromotionStock(int discountQuantity) {
+        this.quantity -= discountQuantity;
+        if (this.quantity < 0) {
+            TotalProduct.valueOf(this.name).getProduct().updateQuantity(this.quantity);
+            this.quantity = 0;
+        }
     }
 
-    public boolean isActivePromotion(){
+    public boolean isStockExist() {
+        return this.quantity > 0;
+    }
+
+    public boolean canGiveMore(int newQuantity){
+        return this.quantity >= newQuantity;
+    }
+
+    public boolean isActivePromotion() {
         return this.promotion.isWithinPromotionPeriod();
     }
 
@@ -39,7 +51,7 @@ public class PromotionProduct {
         return this.quantity;
     }
 
-    public Promotion getPromotion(){
+    public Promotion getPromotion() {
         return this.promotion;
     }
 
