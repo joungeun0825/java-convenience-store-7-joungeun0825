@@ -15,11 +15,17 @@ public enum TotalProduct {
 
     private final Product product;
 
-    TotalProduct(Product product){
+    TotalProduct(Product product) {
         this.product = product;
     }
 
-    public boolean checkValidPromotionProduct(){
+    public void updateProductPriceWithPromotionProductPrice() {
+        if (this.product.getPrice() == 0 && this.product.getPromotionProduct() != null) {
+            this.product.updatePrice(this.product.getPromotionProduct().getPrice());
+        }
+    }
+
+    public boolean checkValidPromotionProduct() {
         return this.product.existValidPromotion();
     }
 

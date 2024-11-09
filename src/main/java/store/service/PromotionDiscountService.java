@@ -14,6 +14,7 @@ public class PromotionDiscountService {
         PromotionDiscount updatedDiscount = getDiscounts(promotionProduct, promotion, purchaseProduct);
 
         Receipt.addPromotionDiscounts(updatedDiscount);
+        purchaseProduct.applyPromotionDiscount(updatedDiscount);
         promotionProduct.decreasePromotionStock(purchaseProduct.getQuantity());
     }
 

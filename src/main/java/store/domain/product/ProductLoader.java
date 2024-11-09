@@ -16,6 +16,7 @@ public class ProductLoader {
     public static void stockProducts() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH, Charset.forName("UTF-8")))) {
             loadProducts(reader);
+            updateProductPriceWithPromotionProductPrice();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -64,5 +65,11 @@ public class ProductLoader {
     private static void addPromotionProduct(String name, int price, int promotionQuantity, String promotionName) {
         Promotion promotion = TotalPromotion.fromDisplayName(promotionName).getPromotion();
         TotalProduct.valueOf(name).getProduct().updatePromotionProduct(price, promotionQuantity, promotion);
+    }
+
+    private static void updateProductPriceWithPromotionProductPrice(){
+        for(TotalProduct totalProduct:TotalProduct.values()){
+            totalProduct.updateProductPriceWithPromotionProductPrice();
+        }
     }
 }

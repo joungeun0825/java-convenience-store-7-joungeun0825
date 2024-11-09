@@ -1,11 +1,13 @@
 package store.domain.purchase;
 
+import store.domain.discount.PromotionDiscount;
 import store.domain.product.TotalProduct;
 
 public class PurchaseProduct {
     private String name;
     private int quantity;
     private int price;
+    private PromotionDiscount promotionDiscount;
 
     public PurchaseProduct(String name, int quantity) {
         this.name = name;
@@ -24,6 +26,19 @@ public class PurchaseProduct {
 
     private void updatePriceWithQuantity(int newQuantity) {
         this.price = TotalProduct.valueOf(this.name).getProduct().getPrice() * newQuantity;
+    }
+
+    public void applyPromotionDiscount(PromotionDiscount promotionDiscount) {
+        if (promotionDiscount.getPrice() > 0) {
+            this.promotionDiscount = promotionDiscount;
+        }
+    }
+
+    public int checkPromotionAndGetPrice() {
+        if (this.promotionDiscount == null) {
+            return this.price;
+        }
+        return 0;
     }
 
     public String getName() {

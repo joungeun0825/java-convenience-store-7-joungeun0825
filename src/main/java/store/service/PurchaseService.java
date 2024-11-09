@@ -5,12 +5,15 @@ import store.domain.purchase.PurchaseProducts;
 import store.domain.product.Product;
 import store.domain.product.TotalProduct;
 import store.domain.receipt.Receipt;
+import store.view.AskCustomerInputView;
 
 public class PurchaseService {
     public static void purchaseProducts(PurchaseProducts purchaseProducts) {
         for (PurchaseProduct purchaseProduct : purchaseProducts.getProducts()) {
             purchase(purchaseProduct);
+            Receipt.addPurchaseProduct(purchaseProduct);
         }
+        applyMembershipDiscount(purchaseProducts);
     }
 
     private static void purchase(PurchaseProduct purchaseProduct) {
@@ -20,6 +23,11 @@ public class PurchaseService {
             return;
         }
         product.updatePurchase(purchaseProduct.getQuantity());
-        Receipt.addPurchaseProduct(purchaseProduct);
+    }
+
+    private static void applyMembershipDiscount(PurchaseProducts purchaseProducts) {
+        if (AskCustomerInputView.askCustomerToApplyMembership()) {
+            MembershipDiscountService.applyMembershipDiscount(purchaseProducts);
+        }
     }
 }

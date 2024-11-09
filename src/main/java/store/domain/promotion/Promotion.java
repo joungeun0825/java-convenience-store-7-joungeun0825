@@ -53,14 +53,6 @@ public class Promotion {
         return this.get;
     }
 
-    public LocalDateTime getStartDate() {
-        return this.startDate;
-    }
-
-    public LocalDateTime getEndDate() {
-        return this.startDate;
-    }
-
     private LocalDateTime convertToLocalDate(String dateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return LocalDate.parse(dateString, formatter).atStartOfDay();

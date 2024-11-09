@@ -12,6 +12,10 @@ public class Product {
         this.name = name;
     }
 
+    public void updatePrice(int newPrice){
+        this.price = newPrice;
+    }
+
     public void updateRegularProduct(int price, int quantity) {
         this.price = price;
         this.quantity = quantity;

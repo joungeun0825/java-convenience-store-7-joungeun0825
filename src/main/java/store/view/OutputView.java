@@ -24,7 +24,10 @@ public class OutputView {
     private static final String PROMOTION_FORMAT = "%s\t\t%d";
 
     private static final String STATICS_RECEIPT_MESSAGE = "====================================";
+    private static final String TOTAL_PURCHASE_PRICE = "총구매액\t\t%d\t%d";
     private static final String PROMOTION_DISCOUNT = "행사할인\t\t-%d";
+    private static final String MEMBERSHIP_DISCOUNT = "멤버십할인\t\t-%d";
+    private static final String TOTAL_PAY_DISCOUNT = "내실돈\t\t%d";
 
     public static void printStartMessage() {
         System.out.println(START_MESSAGE);
@@ -93,10 +96,9 @@ public class OutputView {
 
     private static void printStatics() {
         System.out.println(STATICS_RECEIPT_MESSAGE);
-        int result = 0;
-        for (PromotionDiscount promotionDiscount : Receipt.getPromotionDiscounts()) {
-            result += promotionDiscount.getPrice();
-        }
-        System.out.println(String.format(PROMOTION_DISCOUNT, result));
+        System.out.println(String.format(TOTAL_PURCHASE_PRICE, Receipt.getTotalPurchaseSize(), Receipt.getTotalPurchasePrice()));
+        System.out.println(String.format(PROMOTION_DISCOUNT, Receipt.getPromotionDiscountsPrice()));
+        System.out.println(String.format(MEMBERSHIP_DISCOUNT, Receipt.getMembershipDiscountPrice()));
+        System.out.println(String.format(TOTAL_PAY_DISCOUNT, Receipt.getTotalPayPrice()));
     }
 }

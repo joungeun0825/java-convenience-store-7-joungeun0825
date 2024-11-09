@@ -20,7 +20,7 @@ public class PromotionDiscount {
     }
 
     public int calcPrice(int quantity) {
-        return TotalProduct.valueOf(this.productName).getProduct().getPrice() * quantity;
+        return TotalProduct.valueOf(this.productName).getProduct().getPromotionProduct().getPrice() * quantity;
     }
 
     public String getProductName() {
