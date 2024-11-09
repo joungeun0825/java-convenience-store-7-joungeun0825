@@ -3,10 +3,10 @@ package store.domain.product;
 import store.domain.promotion.Promotion;
 import store.domain.promotion.TotalPromotion;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,24 +14,12 @@ public class ProductLoader {
     private static final String FILE_PATH = "src/main/resources/products.md";
 
     public static void stockProducts() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH, Charset.forName("UTF-8")))) {
-            loadProducts(reader);
-            updateProductPriceWithPromotionProductPrice();
+        try {
+            Files.lines(Paths.get(FILE_PATH), Charset.forName("UTF-8"))
+                    .skip(1)
+                    .forEach(ProductLoader::processProductLine);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    private static void loadProducts(BufferedReader reader) throws IOException {
-        String inputProduct;
-        boolean isFirstLine = true;
-
-        while ((inputProduct = reader.readLine()) != null) {
-            if (isFirstLine) {
-                isFirstLine = false;
-                continue;
-            }
-            processProductLine(inputProduct);
         }
     }
 
