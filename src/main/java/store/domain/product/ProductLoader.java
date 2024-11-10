@@ -18,6 +18,7 @@ public class ProductLoader {
             Files.lines(Paths.get(FILE_PATH), Charset.forName("UTF-8"))
                     .skip(1)
                     .forEach(ProductLoader::processProductLine);
+            updateProductPriceWithPromotionProductPrice();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -58,5 +59,11 @@ public class ProductLoader {
         Promotion promotion = PromotionType.fromDisplayName(promotionName).getPromotion();
         PromotionProduct promotionProduct = new PromotionProduct(name, price, promotionQuantity, promotion);
         ProductManager.putPromotionProduct(name, promotionProduct);
+    }
+
+    private static void updateProductPriceWithPromotionProductPrice() {
+        for (ProductType productType : ProductType.values()) {
+            ProductManager.updateProductPriceWithPromotionProductPrice(productType);
+        }
     }
 }

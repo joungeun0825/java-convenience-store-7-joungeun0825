@@ -57,6 +57,10 @@ public class PromotionProduct {
         return this.quantity;
     }
 
+    public int getPrice(){
+        return this.price;
+    }
+
     public Promotion getPromotion() {
         return this.promotion;
     }

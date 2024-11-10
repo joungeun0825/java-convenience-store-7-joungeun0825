@@ -40,23 +40,21 @@ public class OutputView {
     }
 
     private static void printStocks() {
+        StringBuilder output = new StringBuilder();
+
         for (ProductType productType : ProductType.values()) {
             Product product = ProductManager.getProduct(String.valueOf(productType));
             PromotionProduct promotionProduct = ProductManager.getPromotionProduct(String.valueOf(productType));
+
             if (promotionProduct != null) {
-                printPromotionProducts(promotionProduct);
+                output.append(promotionProduct.toString()).append("\n");
             }
-            printProducts(product);
+            output.append(product.toString()).append("\n");
         }
+
+        System.out.print(output.toString());
     }
 
-    private static void printPromotionProducts(PromotionProduct promotionProduct) {
-        System.out.println(promotionProduct.toString());
-    }
-
-    private static void printProducts(Product product) {
-        System.out.println(product.toString());
-    }
 
     private static void printPurchase(PurchaseManager purchaseManager) {
         System.out.println(PURCHASE_MESSAGE);

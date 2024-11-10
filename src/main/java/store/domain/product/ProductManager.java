@@ -6,9 +6,21 @@ public class ProductManager {
     private static final EnumMap<ProductType, Product> productMap = new EnumMap<>(ProductType.class);
     private static final EnumMap<ProductType, PromotionProduct> promotionProductMap = new EnumMap<>(ProductType.class);
 
+    public ProductManager(){
+        for (ProductType productType : ProductType.values()) {
+            productMap.put(productType, new Product(productType.toString()));
+        }
+    }
     public static boolean existValidPromotion(String promotionProductName){
         PromotionProduct promotionProduct = getPromotionProduct(promotionProductName);
         return (promotionProduct != null && promotionProduct.isActivePromotion() && promotionProduct.isStockExist());
+    }
+
+    public static void updateProductPriceWithPromotionProductPrice(ProductType productType) {
+        Product product = productMap.get(productType);
+        if (product.getPrice() == 0) {
+            product.updatePrice(promotionProductMap.get(productType).getPrice());
+        }
     }
 
     public static boolean isPurchaseQuantityAvailable(String name, int quantity) {

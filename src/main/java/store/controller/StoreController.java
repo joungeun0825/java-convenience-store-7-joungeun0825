@@ -1,6 +1,7 @@
 package store.controller;
 
 import store.domain.product.ProductLoader;
+import store.domain.product.ProductManager;
 import store.domain.promotion.PromotionLoader;
 import store.domain.purchase.PurchaseManager;
 import store.domain.receipt.Receipt;
@@ -17,6 +18,7 @@ public class StoreController {
     }
 
     public static void init() {
+        new ProductManager();
         PromotionLoader.registerPromotion();
         ProductLoader.stockProducts();
     }
