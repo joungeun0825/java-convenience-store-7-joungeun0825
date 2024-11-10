@@ -33,30 +33,16 @@ public class PromotionDiscountService {
         boolean existMoreQuantity = promotionProduct.canGiveMore(purchaseProduct.getQuantity() + promotion.getGet());
 
         if (purchaseProduct.getQuantity() % promotionCycle == promotion.getBuy() && existMoreQuantity) {
-            askCustomerToGetMoreProduct(promotion, purchaseProduct);
+            CustomerInteractionService.handleExtraPromotion(promotion, purchaseProduct);
         }
     }
 
     private static PromotionDiscount checkStockQuantity(Promotion promotion, PurchaseProduct purchaseProduct, PromotionDiscount promotionDiscount, int realDiscountQuantity) {
         int totalSet = promotion.calculateTotalPromotionQuantity(realDiscountQuantity);
         if (totalSet < purchaseProduct.getQuantity()) {
-            askCustomerToKeepGoing(purchaseProduct, purchaseProduct.getQuantity() - totalSet);
+            CustomerInteractionService.confirmPurchaseWithCustomer(purchaseProduct, purchaseProduct.getQuantity() - totalSet);
             return promotionDiscount.updatePromotionDiscountWithQuantity(realDiscountQuantity);
         }
         return promotionDiscount;
-    }
-
-    private static void askCustomerToGetMoreProduct(Promotion promotion, PurchaseProduct purchaseProduct) {
-        boolean answer = AskCustomerInputView.askCustomerToGetMoreProduct(purchaseProduct.getName(), promotion.getGet());
-        if (answer) {
-            purchaseProduct.updatePurchaseWithQuantity(purchaseProduct.getQuantity() + promotion.getGet());
-        }
-    }
-
-    private static void askCustomerToKeepGoing(PurchaseProduct purchaseProduct, int notDiscountProduct) {
-        boolean answer = AskCustomerInputView.askCustomerToKeepGoing(purchaseProduct.getName(), notDiscountProduct);
-        if (!answer) {
-            purchaseProduct.updatePurchaseWithQuantity(purchaseProduct.getQuantity() - notDiscountProduct);
-        }
     }
 }
