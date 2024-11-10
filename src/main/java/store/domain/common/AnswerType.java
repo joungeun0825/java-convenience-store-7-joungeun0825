@@ -13,7 +13,8 @@ public enum AnswerType {
     public static boolean checkYes(String inputType) {
         if (Y.type.equals(inputType.toUpperCase())) {
             return true;
-        } else if (N.type.equals(inputType.toUpperCase())) {
+        }
+        if (N.type.equals(inputType.toUpperCase())) {
             return false;
         }
         throw new IllegalArgumentException("Y 또는 N만 입력 가능합니다.");
