@@ -2,8 +2,7 @@ package store.view;
 
 import store.domain.product.*;
 import store.domain.discount.PromotionDiscount;
-import store.domain.purchase.PurchaseProduct;
-import store.domain.purchase.PurchaseProducts;
+import store.domain.purchase.PurchaseManager;
 import store.domain.receipt.Receipt;
 
 public class OutputView {
@@ -33,9 +32,9 @@ public class OutputView {
         System.out.println(ERROR_MESSAGE + message);
     }
 
-    public static void printReceipt(PurchaseProducts purchaseProducts) {
+    public static void printReceipt(PurchaseManager purchaseManager) {
         System.out.println(START_RECEIPT_MESSAGE);
-        printPurchase(purchaseProducts);
+        printPurchase(purchaseManager);
         printPromotion();
         printStatics();
     }
@@ -59,15 +58,9 @@ public class OutputView {
         System.out.println(product.toString());
     }
 
-    private static void printPurchase(PurchaseProducts purchaseProducts) {
+    private static void printPurchase(PurchaseManager purchaseManager) {
         System.out.println(PURCHASE_MESSAGE);
-        for (PurchaseProduct purchaseProduct : purchaseProducts.getProducts()) {
-            System.out.println(String.format(PURCHASE_FORMAT,
-                    purchaseProduct.getName(),
-                    purchaseProduct.getQuantity(),
-                    String.format("%,d", purchaseProduct.getPrice())
-            ));
-        }
+        System.out.println(purchaseManager.toString());
     }
 
     private static void printPromotion() {

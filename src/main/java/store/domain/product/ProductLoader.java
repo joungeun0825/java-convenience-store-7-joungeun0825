@@ -25,16 +25,20 @@ public class ProductLoader {
 
     private static void processProductLine(String inputProduct) {
         List<String> currentProduct = parseProductLine(inputProduct);
+
         String name = currentProduct.get(0);
         int price = Integer.parseInt(currentProduct.get(1));
         int quantity = Integer.parseInt(currentProduct.get(2));
         String promotion = currentProduct.get(3);
 
+        processProducts(name, price, quantity, promotion);
+    }
+
+    private static void processProducts(String name, int price, int quantity, String promotion) {
         if (isRegularProduct(promotion)) {
             addRegularProduct(name, price, quantity);
             return;
         }
-
         addPromotionProduct(name, price, quantity, promotion);
     }
 
@@ -52,7 +56,7 @@ public class ProductLoader {
 
     private static void addPromotionProduct(String name, int price, int promotionQuantity, String promotionName) {
         Promotion promotion = PromotionType.fromDisplayName(promotionName).getPromotion();
-        PromotionProduct promotionProduct = new PromotionProduct(name,price,promotionQuantity,promotion);
+        PromotionProduct promotionProduct = new PromotionProduct(name, price, promotionQuantity, promotion);
         ProductRegistry.putPromotionProduct(name, promotionProduct);
     }
 }

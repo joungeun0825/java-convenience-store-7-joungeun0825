@@ -2,8 +2,7 @@ package store.controller;
 
 import store.domain.product.ProductLoader;
 import store.domain.promotion.PromotionLoader;
-import store.domain.purchase.PurchaseProducts;
-import store.service.PurchaseService;
+import store.domain.purchase.PurchaseManager;
 import store.domain.receipt.Receipt;
 import store.view.AskCustomerInputView;
 import store.view.PurchaseProductInputView;
@@ -36,8 +35,8 @@ public class StoreController {
 
     public static void startPurchase() {
         Receipt.initReceipt();
-        PurchaseProducts purchaseProducts = PurchaseProductInputView.inputProducts();
-        PurchaseService.purchaseProducts(purchaseProducts);
-        OutputView.printReceipt(purchaseProducts);
+        PurchaseManager purchaseManager = PurchaseProductInputView.inputProducts();
+        purchaseManager.purchaseProducts();
+        OutputView.printReceipt(purchaseManager);
     }
 }

@@ -6,7 +6,7 @@ import store.domain.product.ProductRegistry;
 import store.domain.product.ProductType;
 import store.domain.product.PromotionProduct;
 import store.domain.purchase.PurchaseProduct;
-import store.domain.purchase.PurchaseProducts;
+import store.domain.purchase.PurchaseManager;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,7 +22,7 @@ public class PurchaseProductInputView {
     private static final String INPUT_OVER_ZERO = "0 이상의 구매량을 입력하세요";
     private static final String PRODUCT_INPUT_REGEX = "^\\[(.+)-(\\d+)]$";
 
-    public static PurchaseProducts inputProducts() {
+    public static PurchaseManager inputProducts() {
         System.out.println(INPUT_MESSAGE);
         try {
             return processInput(Console.readLine().trim());
@@ -32,7 +32,7 @@ public class PurchaseProductInputView {
         }
     }
 
-    private static PurchaseProducts processInput(String input) {
+    private static PurchaseManager processInput(String input) {
         validateNonEmptyInput(input);
         List<String> purchaseProductList = Arrays.asList(input.split(","))
                 .stream()
@@ -47,12 +47,12 @@ public class PurchaseProductInputView {
         }
     }
 
-    private static PurchaseProducts createPurchaseProducts(List<String> inputProducts) {
-        PurchaseProducts purchaseProducts = new PurchaseProducts();
+    private static PurchaseManager createPurchaseProducts(List<String> inputProducts) {
+        PurchaseManager purchaseManager = new PurchaseManager();
         for (String input : inputProducts) {
-            purchaseProducts.add(parsePurchaseProduct(input));
+            purchaseManager.addPurchaseProduct(parsePurchaseProduct(input));
         }
-        return purchaseProducts;
+        return purchaseManager;
     }
 
     private static PurchaseProduct parsePurchaseProduct(String inputProduct) {
