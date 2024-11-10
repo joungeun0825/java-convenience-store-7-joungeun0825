@@ -36,7 +36,7 @@ public class PromotionLoader {
     }
 
     private static void addPromotion(String name, int buy, int get, String startDate, String endDate) {
-        Promotion promotion = TotalPromotion.fromDisplayName(name).getPromotion();
+        Promotion promotion = PromotionType.fromDisplayName(name).getPromotion();
         promotion.updatePromotion(buy, get, startDate, endDate);
     }
 }

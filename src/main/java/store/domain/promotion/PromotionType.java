@@ -1,6 +1,6 @@
 package store.domain.promotion;
 
-public enum TotalPromotion {
+public enum PromotionType {
     탄산2_1("탄산2+1",new Promotion("탄산2+1")),
     MD추천상품("MD추천상품", new Promotion("MD추천상품")),
     반짝할인("반짝할인", new Promotion("반짝할인"));
@@ -8,7 +8,7 @@ public enum TotalPromotion {
     private final String displayName;
     private final Promotion promotion;
 
-    TotalPromotion(String displayName, Promotion promotion){
+    PromotionType(String displayName, Promotion promotion){
         this.displayName = displayName;
         this.promotion = promotion;
     }
@@ -21,8 +21,8 @@ public enum TotalPromotion {
         return promotion;
     }
 
-    public static TotalPromotion fromDisplayName(String displayName) {
-        for (TotalPromotion promotion : TotalPromotion.values()) {
+    public static PromotionType fromDisplayName(String displayName) {
+        for (PromotionType promotion : PromotionType.values()) {
             if (promotion.getDisplayName().equals(displayName)) {
                 return promotion;
             }

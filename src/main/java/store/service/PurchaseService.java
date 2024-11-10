@@ -1,9 +1,12 @@
 package store.service;
 
+import store.domain.product.ProductRegistry;
+import store.domain.product.ProductType;
+import store.domain.product.PromotionProduct;
+import store.domain.promotion.Promotion;
 import store.domain.purchase.PurchaseProduct;
 import store.domain.purchase.PurchaseProducts;
 import store.domain.product.Product;
-import store.domain.product.TotalProduct;
 import store.domain.receipt.Receipt;
 import store.view.AskCustomerInputView;
 
@@ -17,9 +20,10 @@ public class PurchaseService {
     }
 
     private static void purchase(PurchaseProduct purchaseProduct) {
-        Product product = TotalProduct.valueOf(purchaseProduct.getName()).getProduct();
-        if (product.existValidPromotion()) {
-            PromotionDiscountService.applyPromotionDiscount(product.getPromotionProduct(), purchaseProduct);
+        Product product = ProductRegistry.getProduct(purchaseProduct.getName());
+        PromotionProduct promotionProduct = ProductRegistry.getPromotionProduct(purchaseProduct.getName());
+        if (ProductRegistry.existValidPromotion(purchaseProduct.getName())) {
+            PromotionDiscountService.applyPromotionDiscount(promotionProduct, purchaseProduct);
             return;
         }
         product.updatePurchase(purchaseProduct.getQuantity());

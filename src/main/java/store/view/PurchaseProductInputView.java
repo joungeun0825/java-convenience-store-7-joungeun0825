@@ -1,7 +1,10 @@
 package store.view;
 
 import camp.nextstep.edu.missionutils.Console;
-import store.domain.product.TotalProduct;
+import store.domain.product.Product;
+import store.domain.product.ProductRegistry;
+import store.domain.product.ProductType;
+import store.domain.product.PromotionProduct;
 import store.domain.purchase.PurchaseProduct;
 import store.domain.purchase.PurchaseProducts;
 
@@ -80,16 +83,18 @@ public class PurchaseProductInputView {
 
     private static void validateProductExists(String name) {
         try {
-            TotalProduct.valueOf(name);
+            ProductType.valueOf(name);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(NOT_EXIST_PRODUCT);
         }
     }
 
     private static void validatePurchaseQuantity(String name, int quantity) {
-        int availableProductQuantity = TotalProduct.valueOf(name).getProduct().getQuantity();
-        if (TotalProduct.valueOf(name).checkValidPromotionProduct()) {
-            availableProductQuantity += TotalProduct.valueOf(name).getProduct().getPromotionProduct().getQuantity();
+        Product product = ProductRegistry.getProduct(name);
+        PromotionProduct promotionProduct = ProductRegistry.getPromotionProduct(name);
+        int availableProductQuantity = product.getQuantity();
+        if (ProductRegistry.existValidPromotion(name)) {
+            availableProductQuantity += promotionProduct.getQuantity();
         }
         if (availableProductQuantity < quantity) {
             throw new IllegalArgumentException(CANNOT_PURCHASE_PRODUCT);

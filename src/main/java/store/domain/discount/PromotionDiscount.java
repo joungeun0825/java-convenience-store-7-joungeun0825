@@ -1,6 +1,6 @@
 package store.domain.discount;
 
-import store.domain.product.TotalProduct;
+import store.domain.product.ProductRegistry;
 
 public class PromotionDiscount {
     private String productName;
@@ -20,7 +20,7 @@ public class PromotionDiscount {
     }
 
     public int calcPrice(int quantity) {
-        return TotalProduct.valueOf(this.productName).getProduct().getPromotionProduct().getPrice() * quantity;
+        return ProductRegistry.getPromotionProduct(this.productName).getPrice() * quantity;
     }
 
     public String getProductName() {

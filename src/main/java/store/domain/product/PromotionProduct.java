@@ -25,7 +25,7 @@ public class PromotionProduct {
     public void decreasePromotionStock(int discountQuantity) {
         this.quantity -= discountQuantity;
         if (this.quantity < 0) {
-            TotalProduct.valueOf(this.name).getProduct().updateQuantity(this.quantity);
+            ProductRegistry.getProduct(this.name).updateQuantity(this.quantity);
             this.quantity = 0;
         }
     }
@@ -40,10 +40,6 @@ public class PromotionProduct {
 
     public boolean isActivePromotion() {
         return this.promotion.isWithinPromotionPeriod();
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     public int getPrice() {

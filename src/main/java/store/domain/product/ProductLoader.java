@@ -1,7 +1,7 @@
 package store.domain.product;
 
 import store.domain.promotion.Promotion;
-import store.domain.promotion.TotalPromotion;
+import store.domain.promotion.PromotionType;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -18,7 +18,6 @@ public class ProductLoader {
             Files.lines(Paths.get(FILE_PATH), Charset.forName("UTF-8"))
                     .skip(1)
                     .forEach(ProductLoader::processProductLine);
-            updateProductPriceWithPromotionProductPrice();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -48,17 +47,12 @@ public class ProductLoader {
     }
 
     private static void addRegularProduct(String name, int price, int quantity) {
-        TotalProduct.valueOf(name).getProduct().updateRegularProduct(price, quantity);
+        ProductRegistry.putProduct(name, new Product(name, price, quantity));
     }
 
     private static void addPromotionProduct(String name, int price, int promotionQuantity, String promotionName) {
-        Promotion promotion = TotalPromotion.fromDisplayName(promotionName).getPromotion();
-        TotalProduct.valueOf(name).getProduct().updatePromotionProduct(price, promotionQuantity, promotion);
-    }
-
-    private static void updateProductPriceWithPromotionProductPrice() {
-        for (TotalProduct totalProduct : TotalProduct.values()) {
-            totalProduct.updateProductPriceWithPromotionProductPrice();
-        }
+        Promotion promotion = PromotionType.fromDisplayName(promotionName).getPromotion();
+        PromotionProduct promotionProduct = new PromotionProduct(name,price,promotionQuantity,promotion);
+        ProductRegistry.putPromotionProduct(name, promotionProduct);
     }
 }

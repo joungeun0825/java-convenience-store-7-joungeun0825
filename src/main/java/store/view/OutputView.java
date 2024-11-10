@@ -1,9 +1,7 @@
 package store.view;
 
-import store.domain.product.TotalProduct;
+import store.domain.product.*;
 import store.domain.discount.PromotionDiscount;
-import store.domain.product.Product;
-import store.domain.product.PromotionProduct;
 import store.domain.purchase.PurchaseProduct;
 import store.domain.purchase.PurchaseProducts;
 import store.domain.receipt.Receipt;
@@ -43,9 +41,9 @@ public class OutputView {
     }
 
     private static void printStocks() {
-        for (TotalProduct totalProduct : TotalProduct.values()) {
-            Product product = totalProduct.getProduct();
-            PromotionProduct promotionProduct = product.getPromotionProduct();
+        for (ProductType productType : ProductType.values()) {
+            Product product = ProductRegistry.getProduct(String.valueOf(productType));
+            PromotionProduct promotionProduct = ProductRegistry.getPromotionProduct(String.valueOf(productType));
             if (promotionProduct != null) {
                 printPromotionProducts(promotionProduct);
             }
