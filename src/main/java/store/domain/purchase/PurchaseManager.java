@@ -1,7 +1,7 @@
 package store.domain.purchase;
 
 import store.domain.product.Product;
-import store.domain.product.ProductRegistry;
+import store.domain.product.ProductManager;
 import store.domain.product.PromotionProduct;
 import store.domain.receipt.Receipt;
 import store.service.MembershipDiscountService;
@@ -34,13 +34,13 @@ public class PurchaseManager {
     }
 
     private static void applyPromotionDiscount(PurchaseProduct purchaseProduct) {
-        Product product = ProductRegistry.getProduct(purchaseProduct.getName());
-        PromotionProduct promotionProduct = ProductRegistry.getPromotionProduct(purchaseProduct.getName());
-        if (ProductRegistry.existValidPromotion(purchaseProduct.getName())) {
+        Product product = ProductManager.getProduct(purchaseProduct.getName());
+        PromotionProduct promotionProduct = ProductManager.getPromotionProduct(purchaseProduct.getName());
+        if (ProductManager.existValidPromotion(purchaseProduct.getName())) {
             PromotionDiscountService.applyPromotionDiscount(promotionProduct, purchaseProduct);
             return;
         }
-        product.updatePurchase(purchaseProduct.getQuantity());
+        product.adjustPurchase(purchaseProduct.getQuantity());
     }
 
     private static void applyMembershipDiscount(List<PurchaseProduct> purchaseProducts) {

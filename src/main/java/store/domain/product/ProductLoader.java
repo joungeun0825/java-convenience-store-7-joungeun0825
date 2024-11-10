@@ -51,12 +51,12 @@ public class ProductLoader {
     }
 
     private static void addRegularProduct(String name, int price, int quantity) {
-        ProductRegistry.putProduct(name, new Product(name, price, quantity));
+        ProductManager.putProduct(name, new Product(name, price, quantity));
     }
 
     private static void addPromotionProduct(String name, int price, int promotionQuantity, String promotionName) {
         Promotion promotion = PromotionType.fromDisplayName(promotionName).getPromotion();
         PromotionProduct promotionProduct = new PromotionProduct(name, price, promotionQuantity, promotion);
-        ProductRegistry.putPromotionProduct(name, promotionProduct);
+        ProductManager.putPromotionProduct(name, promotionProduct);
     }
 }

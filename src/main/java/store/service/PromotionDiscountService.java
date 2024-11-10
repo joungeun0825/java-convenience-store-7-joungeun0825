@@ -11,36 +11,29 @@ public class PromotionDiscountService {
     public static void applyPromotionDiscount(PromotionProduct promotionProduct, PurchaseProduct purchaseProduct) {
         Promotion promotion = promotionProduct.getPromotion();
 
-        PromotionDiscount updatedDiscount = getDiscounts(promotionProduct, promotion, purchaseProduct);
+        PromotionDiscount updatedDiscount = calculateDiscount(promotionProduct, promotion, purchaseProduct);
 
         Receipt.addPromotionDiscounts(updatedDiscount);
         purchaseProduct.applyPromotionDiscount(updatedDiscount);
         promotionProduct.decreasePromotionStock(purchaseProduct.getQuantity());
     }
 
-    private static PromotionDiscount getDiscounts(PromotionProduct promotionProduct, Promotion promotion, PurchaseProduct purchaseProduct) {
-        checkCanGetMoreProduct(promotionProduct, promotion, purchaseProduct);
-
-        int needDiscountQuantity = promotion.calculateDiscountQuantity(purchaseProduct.getQuantity());
-        int realDiscountQuantity = promotionProduct.calculateRealDiscountQuantity();
-
-        PromotionDiscount promotionDiscount = new PromotionDiscount(purchaseProduct.getName(), needDiscountQuantity);
-        return checkStockQuantity(promotion, purchaseProduct, promotionDiscount, realDiscountQuantity);
-    }
-
-    private static void checkCanGetMoreProduct(PromotionProduct promotionProduct, Promotion promotion, PurchaseProduct purchaseProduct) {
-        int promotionCycle = promotion.getBuy() + promotion.getGet();
-        boolean existMoreQuantity = promotionProduct.canGiveMore(purchaseProduct.getQuantity() + promotion.getGet());
-
-        if (purchaseProduct.getQuantity() % promotionCycle == promotion.getBuy() && existMoreQuantity) {
+    private static PromotionDiscount calculateDiscount(PromotionProduct promotionProduct, Promotion promotion, PurchaseProduct purchaseProduct) {
+        if (promotionProduct.canApplyPromotion(promotion, purchaseProduct)) {
             CustomerInteractionService.handleExtraPromotion(promotion, purchaseProduct);
         }
+
+        int requiredForDiscountQuantity = promotion.calculateDiscountQuantity(purchaseProduct.getQuantity());
+        int maxDiscountQuantity = promotionProduct.calculateRealDiscountQuantity();
+
+        PromotionDiscount promotionDiscount = new PromotionDiscount(purchaseProduct.getName(), requiredForDiscountQuantity);
+        return checkAndAdjustStockQuantity(promotion, purchaseProduct, promotionDiscount, maxDiscountQuantity);
     }
 
-    private static PromotionDiscount checkStockQuantity(Promotion promotion, PurchaseProduct purchaseProduct, PromotionDiscount promotionDiscount, int realDiscountQuantity) {
-        int totalSet = promotion.calculateTotalPromotionQuantity(realDiscountQuantity);
-        if (totalSet < purchaseProduct.getQuantity()) {
-            CustomerInteractionService.confirmPurchaseWithCustomer(purchaseProduct, purchaseProduct.getQuantity() - totalSet);
+    private static PromotionDiscount checkAndAdjustStockQuantity(Promotion promotion, PurchaseProduct purchaseProduct, PromotionDiscount promotionDiscount, int realDiscountQuantity) {
+        int maxPurchasableWithDiscount = promotion.calculateTotalPromotionQuantity(realDiscountQuantity);
+        if (maxPurchasableWithDiscount < purchaseProduct.getQuantity()) {
+            CustomerInteractionService.confirmPurchaseWithCustomer(purchaseProduct, purchaseProduct.getQuantity() - maxPurchasableWithDiscount);
             return promotionDiscount.updatePromotionDiscountWithQuantity(realDiscountQuantity);
         }
         return promotionDiscount;

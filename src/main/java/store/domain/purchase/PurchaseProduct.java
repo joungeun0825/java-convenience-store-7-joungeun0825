@@ -1,8 +1,7 @@
 package store.domain.purchase;
 
 import store.domain.discount.PromotionDiscount;
-import store.domain.product.ProductRegistry;
-import store.domain.product.ProductType;
+import store.domain.product.ProductManager;
 
 public class PurchaseProduct {
     private String name;
@@ -17,7 +16,7 @@ public class PurchaseProduct {
     }
 
     public int calcPrice() {
-        return ProductRegistry.getProduct(this.name).getPrice() * this.quantity;
+        return ProductManager.getProduct(this.name).getPrice() * this.quantity;
     }
 
     public void updatePurchaseWithQuantity(int newQuantity) {
@@ -26,7 +25,7 @@ public class PurchaseProduct {
     }
 
     private void updatePriceWithQuantity(int newQuantity) {
-        this.price = ProductRegistry.getProduct(this.name).getPrice() * newQuantity;
+        this.price = ProductManager.getProduct(this.name).getPrice() * newQuantity;
     }
 
     public void applyPromotionDiscount(PromotionDiscount promotionDiscount) {

@@ -2,7 +2,7 @@ package store.view;
 
 import camp.nextstep.edu.missionutils.Console;
 import store.domain.product.Product;
-import store.domain.product.ProductRegistry;
+import store.domain.product.ProductManager;
 import store.domain.product.ProductType;
 import store.domain.product.PromotionProduct;
 import store.domain.purchase.PurchaseProduct;
@@ -90,13 +90,7 @@ public class PurchaseProductInputView {
     }
 
     private static void validatePurchaseQuantity(String name, int quantity) {
-        Product product = ProductRegistry.getProduct(name);
-        PromotionProduct promotionProduct = ProductRegistry.getPromotionProduct(name);
-        int availableProductQuantity = product.getQuantity();
-        if (ProductRegistry.existValidPromotion(name)) {
-            availableProductQuantity += promotionProduct.getQuantity();
-        }
-        if (availableProductQuantity < quantity) {
+        if (!ProductManager.isPurchaseQuantityAvailable(name, quantity)) {
             throw new IllegalArgumentException(CANNOT_PURCHASE_PRODUCT);
         }
     }

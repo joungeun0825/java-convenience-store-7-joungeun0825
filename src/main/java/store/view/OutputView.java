@@ -41,8 +41,8 @@ public class OutputView {
 
     private static void printStocks() {
         for (ProductType productType : ProductType.values()) {
-            Product product = ProductRegistry.getProduct(String.valueOf(productType));
-            PromotionProduct promotionProduct = ProductRegistry.getPromotionProduct(String.valueOf(productType));
+            Product product = ProductManager.getProduct(String.valueOf(productType));
+            PromotionProduct promotionProduct = ProductManager.getPromotionProduct(String.valueOf(productType));
             if (promotionProduct != null) {
                 printPromotionProducts(promotionProduct);
             }

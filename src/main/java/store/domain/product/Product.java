@@ -14,11 +14,11 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public void updateQuantity(int newQuantity) {
+    public void adjustMainProductStock(int newQuantity) {
         this.quantity += newQuantity;
     }
 
-    public void updatePurchase(int newQuantity) {
+    public void adjustPurchase(int newQuantity) {
         this.quantity -= newQuantity;
     }
 

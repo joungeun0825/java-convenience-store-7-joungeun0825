@@ -1,6 +1,7 @@
 package store.domain.product;
 
 import store.domain.promotion.Promotion;
+import store.domain.purchase.PurchaseProduct;
 
 public class PromotionProduct {
     private static final String TO_STRING_FORMAT = "- %s %s원 %d개 %s";
@@ -18,6 +19,16 @@ public class PromotionProduct {
         this.promotion = promotion;
     }
 
+    public boolean canApplyPromotion(Promotion promotion, PurchaseProduct purchaseProduct) {
+        int promotionCycle = promotion.getBuy() + promotion.getGet();
+        return canGiveMore(purchaseProduct.getQuantity() + promotion.getGet()) &&
+                (purchaseProduct.getQuantity() % promotionCycle == promotion.getBuy());
+    }
+
+    private boolean canGiveMore(int newQuantity) {
+        return this.quantity >= newQuantity;
+    }
+
     public int calculateRealDiscountQuantity() {
         return promotion.calculateRealDiscountQuantity(quantity);
     }
@@ -25,7 +36,7 @@ public class PromotionProduct {
     public void decreasePromotionStock(int discountQuantity) {
         this.quantity -= discountQuantity;
         if (this.quantity < 0) {
-            ProductRegistry.getProduct(this.name).updateQuantity(this.quantity);
+            ProductManager.getProduct(this.name).adjustMainProductStock(this.quantity);
             this.quantity = 0;
         }
     }
@@ -34,16 +45,12 @@ public class PromotionProduct {
         return this.quantity > 0;
     }
 
-    public boolean canGiveMore(int newQuantity) {
-        return this.quantity >= newQuantity;
-    }
-
     public boolean isActivePromotion() {
         return this.promotion.isWithinPromotionPeriod();
     }
 
-    public int getPrice() {
-        return this.price;
+    public int calcPromotionDiscount(int promotionQuantity){
+        return this.price * promotionQuantity;
     }
 
     public int getQuantity() {
