@@ -10,20 +10,20 @@ import store.view.PurchaseProductInputView;
 import store.view.OutputView;
 
 public class StoreController {
-    private static boolean keepFlag = true;
+    private boolean keepFlag = true;
 
-    public static void start(){
+    public void start(){
         init();
         run();
     }
 
-    public static void init() {
+    public void init() {
         new ProductManager();
         PromotionLoader.registerPromotion();
         ProductLoader.stockProducts();
     }
 
-    public static void run() {
+    public void run() {
         while(keepFlag){
             printStocks();
             startPurchase();
@@ -31,11 +31,11 @@ public class StoreController {
         }
     }
 
-    public static void printStocks(){
+    public void printStocks(){
         OutputView.printStartMessage();
     }
 
-    public static void startPurchase() {
+    public void startPurchase() {
         Receipt.initReceipt();
         PurchaseManager purchaseManager = PurchaseProductInputView.inputProducts();
         purchaseManager.purchaseProducts();

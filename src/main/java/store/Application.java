@@ -7,6 +7,7 @@ import store.view.AskCustomerInputView;
 
 public class Application {
     public static void main(String[] args) {
-        StoreController.start();
+        StoreController storeController = new StoreController();
+        storeController.start();
     }
 }
