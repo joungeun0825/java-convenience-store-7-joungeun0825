@@ -12,7 +12,6 @@ public class OutputView {
 
     private static final String START_RECEIPT_MESSAGE = "==============W 편의점================";
     private static final String PURCHASE_MESSAGE = "상품명\t\t수량 \t금액";
-    private static final String PURCHASE_FORMAT = "%s\t\t%d \t%s";
 
     private static final String PROMOTION_RECEIPT_MESSAGE = "=============증	정===============";
     private static final String PROMOTION_FORMAT = "%s\t\t%d";
@@ -43,18 +42,21 @@ public class OutputView {
         StringBuilder output = new StringBuilder();
 
         for (ProductType productType : ProductType.values()) {
-            Product product = ProductManager.getProduct(String.valueOf(productType));
-            PromotionProduct promotionProduct = ProductManager.getPromotionProduct(String.valueOf(productType));
-
-            if (promotionProduct != null) {
-                output.append(promotionProduct.toString()).append("\n");
-            }
-            output.append(product.toString()).append("\n");
+            appendProductInfo(output, productType);
         }
 
         System.out.print(output.toString());
     }
 
+    private static void appendProductInfo(StringBuilder output, ProductType productType) {
+        Product product = ProductManager.getProduct(String.valueOf(productType));
+        PromotionProduct promotionProduct = ProductManager.getPromotionProduct(String.valueOf(productType));
+
+        if (promotionProduct != null) {
+            output.append(promotionProduct.toString()).append("\n");
+        }
+        output.append(product.toString()).append("\n");
+    }
 
     private static void printPurchase(PurchaseManager purchaseManager) {
         System.out.println(PURCHASE_MESSAGE);
